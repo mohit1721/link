@@ -25,8 +25,8 @@ export const createPostAction = async (inputText: string, selectedFile: string) 
 
 
     const userDatabase: IUser = {
-        firstName: user.firstName || "Patel",
-        lastName: user.lastName || "Mern Stack",
+        firstName: user.firstName || "Amresh",
+        lastName: user.lastName || "Kumar",
         userId: user.id,
         profilePhoto: user.imageUrl
     }
@@ -34,17 +34,21 @@ export const createPostAction = async (inputText: string, selectedFile: string) 
     try {
         if (image) {
             //1. create post with image
+            console.log("image up res before",uploadResponse)
             uploadResponse = await cloudinary.uploader.upload(image);
+            console.log("image up res before2",uploadResponse)
             await Post.create({
                 description: inputText,
                 user: userDatabase,
                 imageUrl: uploadResponse?.secure_url // yha pr image url ayega from cloudinary
             })
+            console.log("image up res after",uploadResponse)
         } else {
             //2. create post with text only
             await Post.create({
                 description: inputText,
-                user: userDatabase
+                user: userDatabase,
+               
             })
         }
         revalidatePath("/");
@@ -93,8 +97,8 @@ export const createCommentAction = async (postId: string, formData: FormData) =>
         if (!postId) throw new Error("Post id required");
 
         const userDatabase: IUser = {
-            firstName: user.firstName || "Patel",
-            lastName: user.lastName || "Mern Stack",
+            firstName: user.firstName || "Amresh ",
+            lastName: user.lastName || "Kumar",
             userId: user.id,
             profilePhoto: user.imageUrl
         }
